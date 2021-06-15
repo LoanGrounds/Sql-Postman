@@ -1,0 +1,545 @@
+{
+	"info": {
+		"_postman_id": "55d28594-49a4-4aaf-b698-1574be625269",
+		"name": "Loangrounds",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "obtener user por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/traerPorId/5",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"traerPorId",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer usuarios por puntos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/traerPorPuntos/5",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"traerPorPuntos",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "traer usuarios por id del genero",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/traerPorGenero/2",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"traerPorGenero",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer usuarios de una loacalidad",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/traerPorLocalidad/1",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"traerPorLocalidad",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "traer usuario por nombre de usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/traerporUserName/Gonza",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"traerporUserName",
+								"Gonza"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "                {\r\n                \"Nombre\": \"ramiro\",\r\n                \"Apellido\": \"funesmori\",\r\n                \"UserName\": \"Ramafunes1\",\r\n               \"Password\" : \"holahla\",\r\n                \"Direccion\" : \"rivadavia 456\",\r\n                \"Telefono\" : \"348738473\",\r\n               \"Dni\": \"45787319\",\r\n                \"Mail\": \"ramiro@gmail.com\",\r\n                \"CBU\": \"7878787\",\r\n                \"CBUAlias\": \"messi\",\r\n               \"CUIT\": \"34258\",\r\n               \"Puntos\": 100,\r\n                \"Ocupacion\": \"futbolista\",\r\n               \"Descripcion\": \"la re muevo\",\r\n                \"URLFoto\": \"...\",\r\n                \"IdGenero\": 3,\r\n                \"IdLocalidad\": 1,\r\n               \"FechaCreacion\": \"2016-05-15\",\r\n                \"FechaNacimiento\": \"1988-06-23\",\r\n                \"CantidadPrestamosExitosos\": 0\r\n                }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/signup",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar un Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/borrar/13",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"borrar",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update un usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                \"Id\": 5,\r\n                \"Nombre\": \"podro\",\r\n                \"Apellido\": \"funesmori\",\r\n                \"UserName\": \"juliAlvarez\",\r\n               \"Password\" : \"holahla\",\r\n                \"Direccion\" : \"rivadavia 456\",\r\n                \"Telefono\" : \"348738473\",\r\n               \"Dni\": \"45787319\",\r\n                \"Mail\": \"ramiro@gmail.com\",\r\n                \"CBU\": \"7878787\",\r\n                \"CBUAlias\": \"messi\",\r\n               \"CUIT\": \"34258\",\r\n               \"Puntos\": 100,\r\n                \"Ocupacion\": \"futbolista\",\r\n               \"Descripcion\": \"la re muevo\",\r\n                \"URLFoto\": \"...\",\r\n                \"IdGenero\": 3,\r\n                \"IdLocalidad\": 1,\r\n               \"FechaCreacion\": \"2016-05-15\",\r\n                \"FechaNacimiento\": \"1988-06-23\",\r\n                \"CantidadPrestamosExitosos\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/update",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cambiar contra de un usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"pass\": \"holaquetal\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Usuarios/update/password?id=12&pass=holis",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Usuarios",
+								"update",
+								"password"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "12"
+								},
+								{
+									"key": "pass",
+									"value": "holis"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prestamos",
+			"item": [
+				{
+					"name": "Prestamos recomendados por monto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/recomendados/100",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"recomendados",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver  prestamos que prestó  un usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/misPrestamosPrestados/5",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"misPrestamosPrestados",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver prestamos que pidió un usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/misPrestamosPedidos/7",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"misPrestamosPedidos",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un detalle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"Monto\": 800,\r\n    \"FechaDeAcuerdo\" : \"2018-07-18\",\r\n    \"CantidadCuotas\" : 5,\r\n    \"InteresXCuota\" : 10,\r\n    \"DiasEntreCuotas\": 20,\r\n    \"DiasTolerancia\" : 5,\r\n    \"IdEstadoDePrestamo\": 1\r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/nuevoDetalle",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"nuevoDetalle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un prestamo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"IdDetallePrestamo\": 17,\r\n\"IdUsuarioPrestamista\": 12,\r\n\"IdUsuarioPrestador\": 14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/nuevo",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"nuevo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cambiar un detalle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"Id\": 4,\r\n    \"Monto\": 800,\r\n    \"FechaDeAcuerdo\" : \"2018-07-18\",\r\n    \"CantidadCuotas\" : 5,\r\n    \"InteresXCuota\" : 10,\r\n    \"DiasEntreCuotas\": 20,\r\n    \"DiasTolerancia\" : 5,\r\n    \"IdEstadoDePrestamo\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/update",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar un prestamo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "4\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Prestamos/borrar",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Prestamos",
+								"borrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Varios",
+			"item": [
+				{
+					"name": "ver generos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Varios/generos/ver",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Varios",
+								"generos",
+								"ver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "traer estados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Varios/EstadosDeUnprestamo/ver",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Varios",
+								"EstadosDeUnprestamo",
+								"ver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver provincias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Varios/provincias/ver",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Varios",
+								"provincias",
+								"ver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver FAQS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Varios/FAQS/ver",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Varios",
+								"FAQS",
+								"ver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver localidades por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{domain}}:{{port}}/Varios/localidades/ver/2",
+							"protocol": "http",
+							"host": [
+								"{{domain}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"Varios",
+								"localidades",
+								"ver",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
