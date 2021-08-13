@@ -75,6 +75,18 @@ namespace ApiLoangrounds.Logica
             }
             return bus;
         }
+        public static VistaPreviaPrestamo ReaderToVista(SqlDataReader lector)
+        {
+            VistaPreviaPrestamo aux = new VistaPreviaPrestamo();
+            if (lector != null)
+            {
+                aux.IdDetallePrestamo = Convert.ToInt32(lector["IdDetallePrestamo"]);
+                aux.prestamista = (lector["prestamista"] == DBNull.Value) ? "" : Convert.ToString(lector["prestamista"]);
+                aux.Monto  = (lector["Monto"] == DBNull.Value) ? -1.0 : Convert.ToDouble(lector["Monto"]);
+                aux.estado = (lector["estado"] == DBNull.Value) ? "" : Convert.ToString(lector["estado"]);
+            }
+            return aux;
+        }
         #endregion
         #region POR GET
         public static List<Prestamo> traerTodos()
@@ -155,10 +167,10 @@ namespace ApiLoangrounds.Logica
 
         
         
-        public static List<Prestamo> traerPrestamosDeUnPrestamista(int id)
+        public static List<VistaPreviaPrestamo> traerPrestamosDeUnPrestamista(int id)
         {
-                List<Prestamo> lista = new List<Prestamo>();
-                Prestamo aux;           
+                List<VistaPreviaPrestamo> lista = new List<VistaPreviaPrestamo>();
+                VistaPreviaPrestamo aux;           
                 SqlParameter param = new SqlParameter("@IdUsuario", id);
                 SqlDataReader lector = BD.traerLector("ListarPrestamosDePrestamista", param);
             try { 
@@ -166,7 +178,7 @@ namespace ApiLoangrounds.Logica
                 {
                     while (lector.Read())
                     {
-                        aux = ReaderToObject(lector);
+                        aux = ReaderToVista(lector);
                         lista.Add(aux);
                     }                   
                 }
