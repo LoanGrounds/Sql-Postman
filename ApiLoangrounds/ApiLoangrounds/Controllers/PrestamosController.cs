@@ -187,21 +187,35 @@ namespace ApiLoangrounds.Controllers
             if (UsuariosLogica.VerificarApiKey(header))
             {
                 ResponseDTO response = new ResponseDTO();
-                try
-                {
+                
                     response.Id = PrestamosLogica.cambiar(p);
-                    DetallesLogica.Cambiar(DetallesLogica.obtenerPorId(p.IdDetallePrestamo));
                     if (response.Id > 0)
                     {
                         response.mensaje = "Se cambió el usuario con exito, el numero son la cantidad de columnas afectadas";
                         return Ok(response);
                     }
-                }
-                catch (Exception ex)
-                {
-                    LogManager.LogException(ex);
-                    return BadRequest("no se logro actualizar");
-                }
+                response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
+                return Ok(response);
+            }
+            return Unauthorized();
+        }
+
+        [Route("Detalles/update")]
+        [HttpPut]
+        public IHttpActionResult actualizarDetalle(DetallePrestamo d)
+        {
+            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+            if (UsuariosLogica.VerificarApiKey(header))
+            {
+                ResponseDTO response = new ResponseDTO();
+             
+                    response.Id = DetallesLogica.Cambiar(d);
+                    DetallesLogica.Cambiar(d);
+                    if (response.Id > 0)
+                    {
+                        response.mensaje = "Se cambió el usuario con exito, el numero son la cantidad de columnas afectadas";
+                        return Ok(response);
+                    }
                 response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
                 return Ok(response);
             }

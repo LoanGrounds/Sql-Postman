@@ -10,13 +10,13 @@ using ApiLoangrounds.Models;
 
 namespace ApiLoangrounds.Logica
 {
-    public static class PrestamosLogica 
+    public static class PrestamosLogica
     {
         #region Metodos de la clase
         public static Prestamo ReaderToObject(SqlDataReader lector)
         {
             Prestamo aux = null;
-            
+
             if (lector != null)
             {
                 aux = new Prestamo();
@@ -63,7 +63,7 @@ namespace ApiLoangrounds.Logica
         public static BusquedaFiltradaDTO readerToDTO(SqlDataReader lector)
         {
             BusquedaFiltradaDTO bus = new BusquedaFiltradaDTO();
-            if(lector != null)
+            if (lector != null)
             {
                 bus.Id = Convert.ToInt32(lector["Id"]);
                 bus.UserName = (lector["UserName"] == DBNull.Value) ? "" : Convert.ToString(lector["UserName"]);
@@ -82,7 +82,7 @@ namespace ApiLoangrounds.Logica
             {
                 aux.IdDetallePrestamo = Convert.ToInt32(lector["IdDetallePrestamo"]);
                 aux.prestamista = (lector["prestamista"] == DBNull.Value) ? "" : Convert.ToString(lector["prestamista"]);
-                aux.Monto  = (lector["Monto"] == DBNull.Value) ? -1.0 : Convert.ToDouble(lector["Monto"]);
+                aux.Monto = (lector["Monto"] == DBNull.Value) ? -1.0 : Convert.ToDouble(lector["Monto"]);
                 aux.estado = (lector["estado"] == DBNull.Value) ? "" : Convert.ToString(lector["estado"]);
             }
             return aux;
@@ -93,7 +93,7 @@ namespace ApiLoangrounds.Logica
         {
             List<Prestamo> lista = new List<Prestamo>();
             Prestamo aux;
-           
+
             SqlDataReader lector = BD.traerLector("Prestamos_obtenerTodos");
             try
             {
@@ -115,18 +115,18 @@ namespace ApiLoangrounds.Logica
         }
         public static Prestamo traerPorId(int id)
         {
-                Prestamo p = new Prestamo();            
-                SqlParameter param = new SqlParameter("@IdPrestamo", id);
-                SqlDataReader lector = BD.traerLector("Prestamo_ObtenerPorId", param);
+            Prestamo p = new Prestamo();
+            SqlParameter param = new SqlParameter("@IdPrestamo", id);
+            SqlDataReader lector = BD.traerLector("Prestamo_ObtenerPorId", param);
             try
             {
                 if (lector.HasRows)
                 {
                     lector.Read();
                     p = ReaderToObject(lector);
-                }               
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogManager.LogException(ex);
             }
@@ -139,22 +139,22 @@ namespace ApiLoangrounds.Logica
         {
             List<PrestamoRecomendadoDTO> aux = new List<PrestamoRecomendadoDTO>();
 
-            SqlParameter[]parametros = {
+            SqlParameter[] parametros = {
                 new SqlParameter("@MaxMonto", montoMax),
                 new SqlParameter("@IdUsuario", idUsuario)
                     };
-                SqlDataReader lector = BD.traerLector("Prestamo_obtenerPorMonto", parametros);             
-                PrestamoRecomendadoDTO pAux;
+            SqlDataReader lector = BD.traerLector("Prestamo_obtenerPorMonto", parametros);
+            PrestamoRecomendadoDTO pAux;
             try
             {
-                if (lector.HasRows) { 
-                
-                while (lector.Read())
-                {
-                    pAux = ReaderToDTO(lector);          
-                    aux.Add(pAux);
-                }                
-               }
+                if (lector.HasRows) {
+
+                    while (lector.Read())
+                    {
+                        pAux = ReaderToDTO(lector);
+                        aux.Add(pAux);
+                    }
+                }
             }
 
             catch (Exception ex)
@@ -165,22 +165,22 @@ namespace ApiLoangrounds.Logica
             return aux;
         }
 
-        
-        
+
+
         public static List<VistaPreviaPrestamo> traerPrestamosDeUnPrestamista(int id)
         {
-                List<VistaPreviaPrestamo> lista = new List<VistaPreviaPrestamo>();
-                VistaPreviaPrestamo aux;           
-                SqlParameter param = new SqlParameter("@IdUsuario", id);
-                SqlDataReader lector = BD.traerLector("ListarPrestamosDePrestamista", param);
-            try { 
+            List<VistaPreviaPrestamo> lista = new List<VistaPreviaPrestamo>();
+            VistaPreviaPrestamo aux;
+            SqlParameter param = new SqlParameter("@IdUsuario", id);
+            SqlDataReader lector = BD.traerLector("ListarPrestamosDePrestamista", param);
+            try {
                 if (lector.HasRows)
                 {
                     while (lector.Read())
                     {
                         aux = ReaderToVista(lector);
                         lista.Add(aux);
-                    }                   
+                    }
                 }
             }
             catch (Exception ex)
@@ -195,7 +195,7 @@ namespace ApiLoangrounds.Logica
         public static List<Prestamo> traerPrestamosDelQuePide(int id)
         {
             List<Prestamo> lista = new List<Prestamo>();
-            Prestamo aux;           
+            Prestamo aux;
             SqlParameter param = new SqlParameter("@IdUsuario", id);
             SqlDataReader lector = BD.traerLector("ListarPrestamosDelQuePide", param);
             try
@@ -219,10 +219,10 @@ namespace ApiLoangrounds.Logica
 
         public static string[] traerActoresPrestamo(int id)
         {
-             string[] nombres = new string[2];           
-             SqlParameter param = new SqlParameter("@IdPrestamo", id);
-             SqlDataReader lector = BD.traerLector("Prestamo_ObtenerActores", param);
-            try { 
+            string[] nombres = new string[2];
+            SqlParameter param = new SqlParameter("@IdPrestamo", id);
+            SqlDataReader lector = BD.traerLector("Prestamo_ObtenerActores", param);
+            try {
                 if (lector.HasRows)
                 {
                     lector.Read();
@@ -264,7 +264,7 @@ namespace ApiLoangrounds.Logica
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogManager.LogException(ex);
             }
@@ -283,12 +283,12 @@ namespace ApiLoangrounds.Logica
                 SqlParameter param = new SqlParameter("@idPrestamo", id);
                 return BD.ExecuteNonQuery("BorrarPrestamo", param);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogManager.LogException(ex);
                 return -1;
             }
-           
+
         }
         public static int insertar(Prestamo p)
         {
@@ -316,19 +316,22 @@ namespace ApiLoangrounds.Logica
             {
                 new SqlParameter("@Comentarios", e.Comentarios),
                 new SqlParameter("@Nombre", e.Nombre),
-                
+
              };
             return Convert.ToInt32(BD.ExecuteScalar("InsertarEstadoPrestamo", parametros.ToArray()));
         }
 
         public static int cambiar(Prestamo p)
         {
+            Prestamo aux = traerPorId(p.Id);
+            if (aux == null) return -1;
+            if (p.IdUsuarioPrestador > 0) aux.IdUsuarioPrestador = p.IdUsuarioPrestador;
             List<SqlParameter> parametros = new List<SqlParameter>()
             {
-                new SqlParameter("@Id", p.Id),
-                new SqlParameter("@idDetalle", p.IdDetallePrestamo),
-                new SqlParameter("@idPestamista", p.IdUsuarioPrestamista),
-                new SqlParameter("@idPrestador",p.IdUsuarioPrestador)
+                new SqlParameter("@Id", aux.Id),
+                new SqlParameter("@idDetalle", aux.IdDetallePrestamo),
+                new SqlParameter("@idPestamista", aux.IdUsuarioPrestamista),
+                new SqlParameter("@idPrestador",aux.IdUsuarioPrestador)
              };
             return BD.ExecuteNonQuery("Prestamos_update", parametros.ToArray());
         }

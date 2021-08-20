@@ -116,16 +116,24 @@ namespace ApiLoangrounds.Logica
         }
         public static int Cambiar(DetallePrestamo detalle)
         {
+            DetallePrestamo aux = DetallesLogica.obtenerPorId(detalle.Id);
+            if (detalle.FechaDeAcuerdo != null) aux.FechaDeAcuerdo = detalle.FechaDeAcuerdo;
+            if (detalle.CantidadCuotas > 0) aux.CantidadCuotas = detalle.CantidadCuotas;
+            if (detalle.DiasEntreCuotas > 0) aux.DiasEntreCuotas = detalle.DiasEntreCuotas;
+            if (detalle.DiasTolerancia > 0) aux.DiasTolerancia = detalle.DiasEntreCuotas;
+            if (detalle.InteresXCuota > 0) aux.InteresXCuota = detalle.InteresXCuota;
+            if (detalle.Monto > 0) aux.Monto = detalle.Monto;
+            if (detalle.IdEstadoDePrestamo > 0) aux.IdEstadoDePrestamo = detalle.IdEstadoDePrestamo;
             List<SqlParameter> parametros = new List<SqlParameter>()
             {
-                new SqlParameter("@idDetalle", detalle.Id),
-                new SqlParameter("@Monto", detalle.Monto),
-                new SqlParameter("@idEstadoPrestamo", detalle.Id),
-                new SqlParameter("@CantCuotas", detalle.CantidadCuotas),
-                new SqlParameter("@InteresXCuota", detalle.InteresXCuota),
-                new SqlParameter("@DiasEntreCuotas",  detalle.DiasEntreCuotas),
-                new SqlParameter("@DiasTolereancia", detalle.DiasTolerancia),
-                new SqlParameter("@FechaAcuerdo", detalle.FechaDeAcuerdo)
+                new SqlParameter("@idDetalle", aux.Id),
+                new SqlParameter("@Monto", aux.Monto),
+                new SqlParameter("@idEstadoPrestamo", aux.Id),
+                new SqlParameter("@CantCuotas", aux.CantidadCuotas),
+                new SqlParameter("@InteresXCuota", aux.InteresXCuota),
+                new SqlParameter("@DiasEntreCuotas",  aux.DiasEntreCuotas),
+                new SqlParameter("@DiasTolereancia", aux.DiasTolerancia),
+                new SqlParameter("@FechaAcuerdo", aux.FechaDeAcuerdo)
              };
             return BD.ExecuteNonQuery("DetallePrestamo_Update", parametros.ToArray());
         }
