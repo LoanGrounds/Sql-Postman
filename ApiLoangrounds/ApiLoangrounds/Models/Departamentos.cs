@@ -7,11 +7,11 @@ namespace ApiLoangrounds.Models
 {
     public class Departamentos
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Nombre { get; set; }
 
         //FOREING KEYS
-        public int IdProvincia { get; set; }
+        public int? IdProvincia { get; set; }
 
     }
 }

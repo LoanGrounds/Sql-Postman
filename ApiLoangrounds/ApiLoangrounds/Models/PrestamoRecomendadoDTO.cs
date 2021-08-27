@@ -8,9 +8,9 @@ namespace ApiLoangrounds.Models
     public class PrestamoRecomendadoDTO
     {
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string UserName { get; set; }
-        public int Monto { get; set; }
+        public int? Monto { get; set; }
         public string UrlFoto { get; set; } = "";
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using spreadOperatorEquivalent;
 using System.Data.SqlClient;
 using ApiLoangrounds.Helpers;
 using ApiLoangrounds.Utils;
@@ -132,7 +133,7 @@ namespace ApiLoangrounds.Logica
         public static int CalcularEdad(Usuario u)
         {
             DateTime Now = DateTime.Today;
-            return Now.Year - u.FechaNacimiento.Year;
+            return Now.Year - u.FechaNacimiento.Value.Year;
         }
         public static bool VerificarApiKey(string key)
         {
@@ -237,7 +238,7 @@ namespace ApiLoangrounds.Logica
             BD.CloseAndDisposeReader(ref lector);
             return lista;
         }
-        public static Usuario traerPorId(int id)
+        public static Usuario traerPorId(int? id)
         {
             Usuario aux = new Usuario();
            
@@ -286,7 +287,7 @@ namespace ApiLoangrounds.Logica
             return aux;
 
         }
-        public static List<Usuario> traerPorGenero(int id)
+        public static List<Usuario> traerPorGenero(int? id)
         {
                 List<Usuario> lista = new List<Usuario>();
                 Usuario aux;
@@ -312,7 +313,7 @@ namespace ApiLoangrounds.Logica
             return lista;
         }
 
-        public static List<Usuario> traerPorLocalidad(int id)
+        public static List<Usuario> traerPorLocalidad(int? id)
         {
             List<Usuario> lista = new List<Usuario>();
             Usuario aux;
@@ -336,7 +337,7 @@ namespace ApiLoangrounds.Logica
             BD.CloseAndDisposeReader(ref lector);
             return lista;
         }
-        public static List<Usuario> traerPorPuntos(int id)
+        public static List<Usuario> traerPorPuntos(int? id)
         {
             List<Usuario> lista = new List<Usuario>();
             Usuario aux;
@@ -369,30 +370,33 @@ namespace ApiLoangrounds.Logica
         }
         public static int Cambiar(Usuario user)
         {
+            Usuario aux = traerPorId(user.Id);
+            if (aux == null) return -1;
+            aux = SpreadEquivalent.spread(aux, user);
             List<SqlParameter> parametros = new List<SqlParameter>()
             {
-                new SqlParameter("@idUsuario", user.Id),
+                new SqlParameter("@idUsuario", aux.Id),
 
-                new SqlParameter("@Nombre", user.Nombre),
-                new SqlParameter("@Apellido", user.Apellido),
-                new SqlParameter("@Username", user.UserName),
-                new SqlParameter("@password", user.Password),
-                new SqlParameter("@Direccion", user.Direccion),
-                new SqlParameter("@Telefono", user.Telefono),
-                new SqlParameter("@Dni", user.Dni),
-                new SqlParameter("@Mail", user.Mail),
-                new SqlParameter("@CBU", user.CBU),
-                new SqlParameter("@CBUAlias", user.CBUAlias),
-                new SqlParameter("@Cuit", user.CUIT),
-                new SqlParameter("@Puntos", user.Puntos),
-                new SqlParameter("@Ocupacion", user.Ocupacion),
-                new SqlParameter("@Descripcion", user.Descripcion),
-                new SqlParameter("@UrlFoto", user.URLFoto),
-                new SqlParameter("@IdGenero", user.IdGenero),
-                new SqlParameter("@IdLocalidad", user.IdLocalidad),
-                new SqlParameter("@FechaCreacion", user.FechaCreacion),
-                new SqlParameter("@FechaNacimiento", user.FechaNacimiento),
-                new SqlParameter("@CantPrestamosExitosos", user.CantidadPrestamosExitosos)
+                new SqlParameter("@Nombre", aux.Nombre),
+                new SqlParameter("@Apellido", aux.Apellido),
+                new SqlParameter("@Username", aux.UserName),
+                new SqlParameter("@password", aux.Password),
+                new SqlParameter("@Direccion", aux.Direccion),
+                new SqlParameter("@Telefono", aux.Telefono),
+                new SqlParameter("@Dni", aux.Dni),
+                new SqlParameter("@Mail", aux.Mail),
+                new SqlParameter("@CBU", aux.CBU),
+                new SqlParameter("@CBUAlias", aux.CBUAlias),
+                new SqlParameter("@Cuit", aux.CUIT),
+                new SqlParameter("@Puntos", aux.Puntos),
+                new SqlParameter("@Ocupacion", aux.Ocupacion),
+                new SqlParameter("@Descripcion", aux.Descripcion),
+                new SqlParameter("@UrlFoto", aux.URLFoto),
+                new SqlParameter("@IdGenero", aux.IdGenero),
+                new SqlParameter("@IdLocalidad", aux.IdLocalidad),
+                new SqlParameter("@FechaCreacion", aux.FechaCreacion),
+                new SqlParameter("@FechaNacimiento", aux.FechaNacimiento),
+                new SqlParameter("@CantPrestamosExitosos", aux.CantidadPrestamosExitosos)
              };
             return BD.ExecuteNonQuery("Usuarios_Update", parametros.ToArray());
         }

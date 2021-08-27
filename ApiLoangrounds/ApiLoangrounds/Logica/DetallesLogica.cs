@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using spreadOperatorEquivalent;
 using System.Web;
 using System.Data.SqlClient;
 using ApiLoangrounds.Helpers;
@@ -24,8 +25,8 @@ namespace ApiLoangrounds.Logica
                 aux.DiasEntreCuotas = (lector["DiasEntreCuotas"] == DBNull.Value) ? -1 : Convert.ToInt16(lector["DiasEntreCuotas"]);
                 aux.DiasTolerancia = (lector["DiasTolerancia"] == DBNull.Value) ? -1 : Convert.ToInt16(lector["DiasTolerancia"]);
                 aux.CantidadCuotas = (lector["CantidadCuotas"] == DBNull.Value) ? -1 : Convert.ToInt16(lector["CantidadCuotas"]);
-                aux.FechaDeAcuerdo = (lector["FechaDeAcuerdo"] == DBNull.Value) ? (DateTime?) null : Convert.ToDateTime(lector["FechaDeAcuerdo"]);
-            }
+                aux.FechaDeAcuerdo = (lector["FechaDeAcuerdo"] == DBNull.Value) ?  (DateTime?) null : Convert.ToDateTime(lector["FechaDeAcuerdo"]);
+            } 
             return aux;
         }
 
@@ -53,11 +54,11 @@ namespace ApiLoangrounds.Logica
                 aux = false;
                 errores = "error, el interes no puede ser negativo";
             }
-            /*if (!ValidacionesHelpers.esFechaValida(d.FechaDeAcuerdo))
+            if (!ValidacionesHelpers.esFechaValida(d.FechaDeAcuerdo))
             {
                 aux = false;
                 errores = "error, la fecha no es valida";
-            }*/
+            }
 
             return aux;
         }
@@ -87,7 +88,7 @@ namespace ApiLoangrounds.Logica
             BD.CloseAndDisposeReader(ref lector);
             return lista;
         }
-        public static DetallePrestamo obtenerPorId(int id)
+        public static DetallePrestamo obtenerPorId(int? id)
         {
             DetallePrestamo aux = new DetallePrestamo();
             SqlParameter param = new SqlParameter ( "@IdDetalle", id );
@@ -109,21 +110,16 @@ namespace ApiLoangrounds.Logica
         }
         #endregion
         #region NonQuery
-        public static int eliminar(int id)
+        public static int eliminar(int? id)
         {
             SqlParameter param = new SqlParameter("@idDetalle", id);
             return BD.ExecuteNonQuery("BorrarDetalle", param);
         }
         public static int Cambiar(DetallePrestamo detalle)
         {
-            DetallePrestamo aux = DetallesLogica.obtenerPorId(detalle.Id);
-            if (detalle.FechaDeAcuerdo != null) aux.FechaDeAcuerdo = detalle.FechaDeAcuerdo;
-            if (detalle.CantidadCuotas > 0) aux.CantidadCuotas = detalle.CantidadCuotas;
-            if (detalle.DiasEntreCuotas > 0) aux.DiasEntreCuotas = detalle.DiasEntreCuotas;
-            if (detalle.DiasTolerancia > 0) aux.DiasTolerancia = detalle.DiasEntreCuotas;
-            if (detalle.InteresXCuota > 0) aux.InteresXCuota = detalle.InteresXCuota;
-            if (detalle.Monto > 0) aux.Monto = detalle.Monto;
-            if (detalle.IdEstadoDePrestamo > 0) aux.IdEstadoDePrestamo = detalle.IdEstadoDePrestamo;
+            DetallePrestamo aux = obtenerPorId(detalle.Id);
+            if (aux == null) return -1;
+            aux = SpreadEquivalent.spread(aux, detalle);
             List<SqlParameter> parametros = new List<SqlParameter>()
             {
                 new SqlParameter("@idDetalle", aux.Id),

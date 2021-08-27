@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using spreadOperatorEquivalent;
 using ApiLoangrounds.Helpers;
 using ApiLoangrounds.Utils;
 using ApiLoangrounds.Models;
@@ -113,7 +114,7 @@ namespace ApiLoangrounds.Logica
             BD.CloseAndDisposeReader(ref lector);
             return lista;
         }
-        public static Prestamo traerPorId(int id)
+        public static Prestamo traerPorId(int? id)
         {
             Prestamo p = new Prestamo();
             SqlParameter param = new SqlParameter("@IdPrestamo", id);
@@ -135,7 +136,7 @@ namespace ApiLoangrounds.Logica
         }
 
 
-        public static List<PrestamoRecomendadoDTO> traerPorMonto(int montoMax, int idUsuario)
+        public static List<PrestamoRecomendadoDTO> traerPorMonto(int? montoMax, int? idUsuario)
         {
             List<PrestamoRecomendadoDTO> aux = new List<PrestamoRecomendadoDTO>();
 
@@ -167,7 +168,7 @@ namespace ApiLoangrounds.Logica
 
 
 
-        public static List<VistaPreviaPrestamo> traerPrestamosDeUnPrestamista(int id)
+        public static List<VistaPreviaPrestamo> traerPrestamosDeUnPrestamista(int? id)
         {
             List<VistaPreviaPrestamo> lista = new List<VistaPreviaPrestamo>();
             VistaPreviaPrestamo aux;
@@ -192,7 +193,7 @@ namespace ApiLoangrounds.Logica
         }
 
 
-        public static List<Prestamo> traerPrestamosDelQuePide(int id)
+        public static List<Prestamo> traerPrestamosDelQuePide(int? id)
         {
             List<Prestamo> lista = new List<Prestamo>();
             Prestamo aux;
@@ -217,7 +218,7 @@ namespace ApiLoangrounds.Logica
             return lista;
         }
 
-        public static string[] traerActoresPrestamo(int id)
+        public static string[] traerActoresPrestamo(int? id)
         {
             string[] nombres = new string[2];
             SqlParameter param = new SqlParameter("@IdPrestamo", id);
@@ -325,7 +326,7 @@ namespace ApiLoangrounds.Logica
         {
             Prestamo aux = traerPorId(p.Id);
             if (aux == null) return -1;
-            if (p.IdUsuarioPrestador > 0) aux.IdUsuarioPrestador = p.IdUsuarioPrestador;
+            aux = SpreadEquivalent.spread(aux, p);
             List<SqlParameter> parametros = new List<SqlParameter>()
             {
                 new SqlParameter("@Id", aux.Id),
