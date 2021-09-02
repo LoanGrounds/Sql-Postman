@@ -42,14 +42,14 @@ namespace ApiLoangrounds.Controllers
         }
 
 
-        [Route("Usuarios/traerPorid")]
+        [Route("Usuarios/traerPorid/{id}")]
         [HttpGet]
-        public IHttpActionResult TraerUsuario()
+        public IHttpActionResult TraerUsuario(int id)
         {
             string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
             if (UsuariosLogica.VerificarApiKey(header))
             {
-                int id = UsuariosLogica.obtenerIdPorApiKey(header);
+              
                 return Ok(UsuariosLogica.traerPorId(id));
             }
             return Unauthorized();
