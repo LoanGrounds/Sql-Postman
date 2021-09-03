@@ -9,6 +9,8 @@ namespace ApiLoangrounds.Models
     {
 
         public int? Id { get; set; }
+
+        public int? IdDetalle{ get; set; }
         public string UserName { get; set; }
         public int? Monto { get; set; }
         public string UrlFoto { get; set; } = "";

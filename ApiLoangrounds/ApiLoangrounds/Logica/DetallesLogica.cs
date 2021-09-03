@@ -124,7 +124,7 @@ namespace ApiLoangrounds.Logica
             {
                 new SqlParameter("@idDetalle", aux.Id),
                 new SqlParameter("@Monto", aux.Monto),
-                new SqlParameter("@idEstadoPrestamo", aux.Id),
+                new SqlParameter("@idEstadoPrestamo", aux.IdEstadoDePrestamo),
                 new SqlParameter("@CantCuotas", aux.CantidadCuotas),
                 new SqlParameter("@InteresXCuota", aux.InteresXCuota),
                 new SqlParameter("@DiasEntreCuotas",  aux.DiasEntreCuotas),

@@ -57,7 +57,7 @@ namespace ApiLoangrounds.Helpers
 
         public static bool esFechaValida(DateTime? fecha)
         {
-            return fecha.HasValue;
+            return true;
         }
      
         public static bool esDniValido(string dni)

@@ -181,7 +181,7 @@ namespace ApiLoangrounds.Controllers
 
         [Route("Prestamos/update")]
         [HttpPut]
-        public IHttpActionResult actualizar(Prestamo p)
+        public IHttpActionResult actualizar([FromBody] Prestamo p)
         {
             string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
             if (UsuariosLogica.VerificarApiKey(header))
@@ -191,7 +191,7 @@ namespace ApiLoangrounds.Controllers
                     response.Id = PrestamosLogica.cambiar(p);
                     if (response.Id > 0)
                     {
-                        response.mensaje = "Se cambió el usuario con exito, el numero son la cantidad de columnas afectadas";
+                        response.mensaje = "Se cambió el prestamo con exito, el numero son la cantidad de columnas afectadas";
                         return Ok(response);
                     }
                 response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
@@ -202,7 +202,7 @@ namespace ApiLoangrounds.Controllers
 
         [Route("Detalles/update")]
         [HttpPut]
-        public IHttpActionResult actualizarDetalle(DetallePrestamo d)
+        public IHttpActionResult actualizarDetalle([FromBody]DetallePrestamo d)
         {
             string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
             if (UsuariosLogica.VerificarApiKey(header))
@@ -210,10 +210,9 @@ namespace ApiLoangrounds.Controllers
                 ResponseDTO response = new ResponseDTO();
              
                     response.Id = DetallesLogica.Cambiar(d);
-                    DetallesLogica.Cambiar(d);
                     if (response.Id > 0)
                     {
-                        response.mensaje = "Se cambió el usuario con exito, el numero son la cantidad de columnas afectadas";
+                        response.mensaje = "Se cambió el detalle con exito, el numero son la cantidad de columnas afectadas";
                         return Ok(response);
                     }
                 response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
