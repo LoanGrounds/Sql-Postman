@@ -158,9 +158,9 @@ namespace ApiLoangrounds.Controllers
             // SE DEBERIA CREAR PRIMERO EL DETALLE ANTES DE PODER CREAR UN PRESTAMO
         }
 
-        [Route("Prestamos/borrar")]
+        [Route("Prestamos/borrar/{id}")]
         [HttpDelete]
-        public IHttpActionResult borrar([FromBody]int id)
+        public IHttpActionResult borrar(int id)
         {
             string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
             if (UsuariosLogica.VerificarApiKey(header))

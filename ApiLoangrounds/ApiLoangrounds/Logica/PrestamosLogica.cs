@@ -281,9 +281,7 @@ namespace ApiLoangrounds.Logica
             Prestamo aux = traerPorId(id);
             try
             {
-                DetallesLogica.eliminar(aux.IdDetallePrestamo);
-                SqlParameter param = new SqlParameter("@idPrestamo", id);
-                return BD.ExecuteNonQuery("BorrarPrestamo", param);
+                return DetallesLogica.eliminar(aux.IdDetallePrestamo);
             }
             catch (Exception ex)
             {
