@@ -12,7 +12,7 @@ namespace ApiLoangrounds.Logica
     public class DetallesLogica
     {
         #region Metodos de la clase
-        public static DetallePrestamo readerToObject(SqlDataReader lector)
+        private static DetallePrestamo readerToObject(SqlDataReader lector)
         {
             DetallePrestamo aux = null;
             if (lector != null)
