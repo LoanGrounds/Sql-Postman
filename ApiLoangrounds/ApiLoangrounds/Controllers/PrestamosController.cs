@@ -57,12 +57,17 @@ namespace ApiLoangrounds.Controllers
         [HttpGet]
         public IHttpActionResult ObtenerRecomendados(int montomax)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header)){
-                int Id = UsuariosLogica.obtenerIdPorApiKey(header);
-                return Ok(PrestamosLogica.traerPorMonto(montomax, Id));
+            try
+            {
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    int Id = UsuariosLogica.obtenerIdPorApiKey(header);
+                    return Ok(PrestamosLogica.traerPorMonto(montomax, Id));
+                }
             }
-
+            catch { return Unauthorized(); }
+            
            return Unauthorized();
         }
 
@@ -71,12 +76,16 @@ namespace ApiLoangrounds.Controllers
         [HttpGet]
         public IHttpActionResult ObtenerDeUsuarioPrestamista()
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
-            {
-                int id = UsuariosLogica.obtenerIdPorApiKey(header);
-                return Ok (PrestamosLogica.traerPrestamosDeUnPrestamista(id));
+            try {
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    int id = UsuariosLogica.obtenerIdPorApiKey(header);
+                    return Ok(PrestamosLogica.traerPrestamosDeUnPrestamista(id));
+                }
             }
+            catch { return Unauthorized(); }
+            
             return Unauthorized();
         }
 
@@ -84,12 +93,16 @@ namespace ApiLoangrounds.Controllers
         [HttpGet]
         public IHttpActionResult ObtenerDeUsuarioPrestador()
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
-            {
-                int id = UsuariosLogica.obtenerIdPorApiKey(header);
-                return Ok (PrestamosLogica.traerPrestamosDelQuePide(id));
+            try {
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    int id = UsuariosLogica.obtenerIdPorApiKey(header);
+                    return Ok(PrestamosLogica.traerPrestamosDelQuePide(id));
+                }
             }
+            catch { return Unauthorized(); }
+            
             return Unauthorized();
         }
 
@@ -97,13 +110,19 @@ namespace ApiLoangrounds.Controllers
         [HttpGet]
         public IHttpActionResult busquedaFiltrada([FromBody] FiltroPrestamo filtro)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
+            try
             {
-                int IdUsuario = UsuariosLogica.obtenerIdPorApiKey(header);
-                return Ok (PrestamosLogica.BusquedaFiltrada(filtro.montoMax, filtro.maxInteres, filtro.minDiasT,
-                    filtro.minDiasCutoas, filtro.minCantCuotas, IdUsuario));               
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    int IdUsuario = UsuariosLogica.obtenerIdPorApiKey(header);
+                    return Ok(PrestamosLogica.BusquedaFiltrada(filtro.montoMax, filtro.maxInteres, filtro.minDiasT,
+                        filtro.minDiasCutoas, filtro.minCantCuotas, IdUsuario));
+                }
+                
             }
+            catch { return Unauthorized(); }
+        
             return Unauthorized();
 
         }
@@ -115,20 +134,25 @@ namespace ApiLoangrounds.Controllers
 
         public IHttpActionResult insertar(Prestamo p)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
+            try
             {
-                ResponseDTO response = new ResponseDTO();
-                string errores = "";
-                response.Id = PrestamosLogica.insertarValido(p, out errores);
-                if (response.Id > 0)
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
                 {
-                    response.mensaje = "se creo el prestamo con exito";
+                    ResponseDTO response = new ResponseDTO();
+                    string errores = "";
+                    response.Id = PrestamosLogica.insertarValido(p, out errores);
+                    if (response.Id > 0)
+                    {
+                        response.mensaje = "se creo el prestamo con exito";
+                        return Ok(response);
+                    }
+                    response.mensaje = "ups, algo salio mal" + errores;
                     return Ok(response);
                 }
-                response.mensaje = "ups, algo salio mal" + errores;
-                return Ok(response);
             }
+            catch { return Unauthorized(); }
+        
 
             return Unauthorized();
 
@@ -140,20 +164,26 @@ namespace ApiLoangrounds.Controllers
         
         public IHttpActionResult insertarDetalle(DetallePrestamo detalle)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
+            try
             {
-                ResponseDTO response = new ResponseDTO();
-                string errores = "";
-                response.Id = DetallesLogica.insertarValido(detalle, out errores);
-                if (response.Id > 0)
+
+
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
                 {
-                    response.mensaje = "se creo el detalle con exito";
+                    ResponseDTO response = new ResponseDTO();
+                    string errores = "";
+                    response.Id = DetallesLogica.insertarValido(detalle, out errores);
+                    if (response.Id > 0)
+                    {
+                        response.mensaje = "se creo el detalle con exito";
+                        return Ok(response);
+                    }
+                    response.mensaje = "ups, algo salio mal" + errores;
                     return Ok(response);
                 }
-                response.mensaje = "ups, algo salio mal" + errores;
-                return Ok(response);
             }
+            catch { return Unauthorized(); }
             return Unauthorized();
             // SE DEBERIA CREAR PRIMERO EL DETALLE ANTES DE PODER CREAR UN PRESTAMO
         }
@@ -162,6 +192,7 @@ namespace ApiLoangrounds.Controllers
         [HttpDelete]
         public IHttpActionResult borrar(int id)
         {
+            try { 
             string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
             if (UsuariosLogica.VerificarApiKey(header))
             {
@@ -175,6 +206,8 @@ namespace ApiLoangrounds.Controllers
                 response.mensaje = "ups, algo salió mal";
                 return Ok(response);
             }
+        }
+            catch { return Unauthorized(); }
             return Unauthorized();
         }
 
@@ -183,20 +216,24 @@ namespace ApiLoangrounds.Controllers
         [HttpPut]
         public IHttpActionResult actualizar([FromBody] Prestamo p)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
+            try
             {
-                ResponseDTO response = new ResponseDTO();
-                
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    ResponseDTO response = new ResponseDTO();
+
                     response.Id = PrestamosLogica.cambiar(p);
                     if (response.Id > 0)
                     {
                         response.mensaje = "Se cambió el prestamo con exito, el numero son la cantidad de columnas afectadas";
                         return Ok(response);
                     }
-                response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
-                return Ok(response);
+                    response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
+                    return Ok(response);
+                }
             }
+            catch { return Unauthorized(); }
             return Unauthorized();
         }
 
@@ -204,20 +241,24 @@ namespace ApiLoangrounds.Controllers
         [HttpPut]
         public IHttpActionResult actualizarDetalle([FromBody]DetallePrestamo d)
         {
-            string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
-            if (UsuariosLogica.VerificarApiKey(header))
+            try
             {
-                ResponseDTO response = new ResponseDTO();
-             
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    ResponseDTO response = new ResponseDTO();
+
                     response.Id = DetallesLogica.Cambiar(d);
                     if (response.Id > 0)
                     {
                         response.mensaje = "Se cambió el detalle con exito, el numero son la cantidad de columnas afectadas";
                         return Ok(response);
                     }
-                response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
-                return Ok(response);
+                    response.mensaje = "algo salio mal, por favor vuelva a intentarlo";
+                    return Ok(response);
+                }
             }
+            catch { return Unauthorized(); }
             return Unauthorized();
         }
         #endregion

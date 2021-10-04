@@ -113,20 +113,25 @@ namespace ApiLoangrounds.Logica
             return Convert.ToInt32(BD.ExecuteScalar("Cuotas_insertar", parametros.ToArray()));
         }
 
-        public static void insertarCuotasDeUnPrestamo(DetallePrestamo detalle)
+        public static bool insertarCuotasDeUnPrestamo(DetallePrestamo detalle)
         {
-            if (detalle == null) return;
-            double precioCuota = calcularPrecioCouta(detalle);
-            for (int i = 0; i < detalle.CantidadCuotas; i++)
-            {
-                Cuota aux = new Cuota();
-                aux.IdDetalle = (int)detalle.Id;
-                aux.Monto = precioCuota;
-                aux.NroCuota = i+1;
-                aux.IdEstadoCouta = 1;
-                aux.FechaVencimiento = calcularFechaCuota(detalle, aux.NroCuota);
-                insertar(aux);
+            if (detalle == null) return false;
+            try {
+                double precioCuota = calcularPrecioCouta(detalle);
+                for (int i = 0; i < detalle.CantidadCuotas; i++)
+                {
+                    Cuota aux = new Cuota();
+                    aux.IdDetalle = (int)detalle.Id;
+                    aux.Monto = precioCuota;
+                    aux.NroCuota = i + 1;
+                    aux.IdEstadoCouta = 1;
+                    aux.FechaVencimiento = calcularFechaCuota(detalle, aux.NroCuota);
+                    insertar(aux);
+                }
             }
+            catch { return false; }
+           
+            return true;
         }
 
         public static DateTime calcularFechaCuota(DetallePrestamo d, int nroCuota)
