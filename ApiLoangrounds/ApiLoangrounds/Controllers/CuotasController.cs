@@ -42,15 +42,16 @@ namespace ApiLoangrounds.Controllers
         #endregion
         #region NonQuery
 
-        [Route("Cuotas/crear")]
+        [Route("Cuotas/crear/{IdDetalle}")]
         [HttpPost]
-        public IHttpActionResult insertCoutas(DetallePrestamo detalle)
+        public IHttpActionResult insertCoutas(int IdDetalle)
         {
             try
             {
                 string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
                 if (UsuariosLogica.VerificarApiKey(header))
                 {
+                    DetallePrestamo detalle = DetallesLogica.obtenerPorId(IdDetalle);
                     if (CuotasLogica.insertarCuotasDeUnPrestamo(detalle)) return Ok();
                     return BadRequest();
                 }

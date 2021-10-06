@@ -164,7 +164,7 @@
     <Compile Include="Helpers\AppSettingsHelper.cs" />
     <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\ValidacionesHelpers.cs" />
-    <Compile Include="Logica\CuotasLogia.cs" />
+    <Compile Include="Logica\CuotasLogica.cs" />
     <Compile Include="Logica\DetallesLogica.cs" />
     <Compile Include="Logica\PrestamosLogica.cs" />
     <Compile Include="Logica\UsuariosLogica.cs" />
