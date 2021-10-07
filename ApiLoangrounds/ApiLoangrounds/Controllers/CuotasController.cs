@@ -52,7 +52,7 @@ namespace ApiLoangrounds.Controllers
                 if (UsuariosLogica.VerificarApiKey(header))
                 {
                     DetallePrestamo detalle = DetallesLogica.obtenerPorId(IdDetalle);
-                    if (CuotasLogica.insertarCuotasDeUnPrestamo(detalle)) return Ok();
+                    if (CuotasLogica.insertarCuotasDeUnPrestamo(detalle)) return Ok("Se crearon las coutas");
                     return BadRequest();
                 }
             }
@@ -86,6 +86,22 @@ namespace ApiLoangrounds.Controllers
                 if (UsuariosLogica.VerificarApiKey(header))
                 {
                     return Ok(CuotasLogica.eliminar(id));
+                }
+            }
+            catch { return Unauthorized(); }
+            return Unauthorized();
+        }
+
+        [Route("Cuotas/borrar/{id}/{nro}")]
+        [HttpPost]
+        public IHttpActionResult deleteCoutas(int id, int nro)
+        {
+            try
+            {
+                string header = Request.Headers.GetValues("ApiKey").FirstOrDefault();
+                if (UsuariosLogica.VerificarApiKey(header))
+                {
+                    return Ok(CuotasLogica.eliminar(id,nro));
                 }
             }
             catch { return Unauthorized(); }

@@ -29,7 +29,7 @@ namespace ApiLoangrounds.Logica
         #endregion
         #region por Get
 
-        public static List<Cuota> obtenerCoutasPorPrestamo(int idDetalle)
+        public static List<Cuota> obtenerCoutasPorPrestamo(int? idDetalle)
         {
             List<Cuota> lista = new List<Cuota>();
             Cuota aux;
@@ -53,7 +53,7 @@ namespace ApiLoangrounds.Logica
             BD.CloseAndDisposeReader(ref lector);
             return lista;
         }
-        public static Cuota obtenerPorId(int idDetalle, int nroCouta)
+        public static Cuota obtenerPorId(int? idDetalle, int? nroCouta)
         {
             Cuota aux = new Cuota();
             List<SqlParameter> parametros = new List<SqlParameter>() {
@@ -78,12 +78,21 @@ namespace ApiLoangrounds.Logica
         }
         #endregion
         #region NonQuery
-        public static int eliminar(int id)
+        public static int eliminar(int? id)
         {
             SqlParameter param = new SqlParameter("@idDetalle", id);
             return BD.ExecuteNonQuery("Cuotas_borrar", param);
         }
 
+        public static int eliminar(int? id, int? nro)
+        {
+            List<SqlParameter> parametros = new List<SqlParameter>() {
+               new SqlParameter ("@idDetalle", id),
+               new SqlParameter ("@nroCuota", nro),
+
+        };
+            return BD.ExecuteNonQuery("Cuotas_borrar", parametros.ToArray());
+        }
         public static int Cambiar(Cuota c)
         {
             Cuota aux = obtenerPorId(c.IdDetalle, c.NroCuota);
@@ -129,15 +138,15 @@ namespace ApiLoangrounds.Logica
                     insertar(aux);
                 }
             }
-            catch { return false; }
+            catch(Exception ex) { return false; }
            
             return true;
         }
 
-        public static DateTime calcularFechaCuota(DetallePrestamo d, int nroCuota)
+        public static DateTime calcularFechaCuota(DetallePrestamo d, int? nroCuota)
         {
-            if (d.FechaDeAcuerdo == null) return default;
-            return d.FechaDeAcuerdo.Value.AddDays((double)d.DiasEntreCuotas * nroCuota);
+            if (d.FechaDeAcuerdo.Value == null) return default;
+            return d.FechaDeAcuerdo.Value.AddDays((double)d.DiasEntreCuotas.Value * nroCuota.Value);
         }
 
         public static double calcularPrecioCouta (DetallePrestamo detalle)
