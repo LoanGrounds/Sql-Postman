@@ -55,7 +55,7 @@ namespace ApiLoangrounds.Logica
 
                 pAux = new PrestamoRecomendadoDTO();
                 pAux.Id = Convert.ToInt32(lector["Id"]);
-                pAux.IdDetalle = Convert.ToInt32(lector["IdDetalle"]);
+                //pAux.IdDetalle = Convert.ToInt32(lector["IdDetalle"]);
                 pAux.Monto = (lector["Monto"] == DBNull.Value) ? -1 : Convert.ToInt32(lector["Monto"]);
                 pAux.UserName = (lector["UserName"] == DBNull.Value) ? "" : Convert.ToString(lector["UserName"]);
             }
