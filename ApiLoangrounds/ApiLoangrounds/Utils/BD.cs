@@ -174,13 +174,7 @@ namespace ApiLoangrounds.Utils
                     consulta.Parameters.AddRange(parametros);
 
                 }
-                lector = consulta.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
-
-
-             
-
-
-
+                lector = consulta.ExecuteReader();
             }
             catch (Exception ex)
             {
@@ -198,7 +192,7 @@ namespace ApiLoangrounds.Utils
             }
             catch (Exception ex)
             {
-                throw;
+                    throw;
             }
             return lector;
         }
